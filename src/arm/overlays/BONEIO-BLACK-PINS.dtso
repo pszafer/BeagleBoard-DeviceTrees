@@ -322,14 +322,42 @@
 			AM33XX_PADCONF(AM335X_PIN_UART1_RTSN, PIN_INPUT_PULLUP, MUX_MODE3)	/* (D17) uart1_rtsn.I2C2_SCL */
 		>;
 	};
+
+	bb_uart1_pins: pinmux_bb_uart1_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT, MUX_MODE0)	/* P9_24 uart1_txd.uart1_txd */
+			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_INPUT, MUX_MODE0)	/* P9_26 uart1_rxd.uart1_rxd */
+		>;
+	};
+
+	bb_uart4_pins: pinmux_bb_uart4_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_WPN, PIN_OUTPUT, MUX_MODE6)	/* P9_13 gpmc_wpn.uart4_txd_mux2 */
+			AM33XX_PADCONF(AM335X_PIN_GPMC_WAIT0, PIN_INPUT, MUX_MODE6)	/* P9_11 gpmc_wait0.uart4_rxd_mux2 */
+		>;
+	};
 };
 
 /* Konfiguracja I2C2 */
 &i2c2 {
 	status = "okay";
 	pinctrl-names = "default";
-	pinctrl-0 = <&bb_i2c2_pins>;
+	pinctrl-0 = <&i2c2_pins>;
 	clock-frequency = <100000>;
+};
+
+/* Konfiguracja UART1 */
+&uart1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&bb_uart1_pins>;
+};
+
+/* Konfiguracja UART4 */
+&uart4 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&bb_uart4_pins>;
 };
 
 /* Nazwy GPIO dla łatwiejszej identyfikacji */
@@ -355,7 +383,7 @@
 		"[rmii1_txd2]",
 		"[usb0_drvvbus]",
 		"[hdmi cec]",
-		"P9_41 [BONEIO_OLED_BUTTON]",
+		"P9_41 [BONEIO_OLED_BTN]",
 		"[rmii1_txd1]",
 		"P8_19 [IN_40]",
 		"P8_13 [IN_46]",
