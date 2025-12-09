@@ -336,6 +336,12 @@
 			AM33XX_PADCONF(AM335X_PIN_GPMC_WAIT0, PIN_INPUT, MUX_MODE6)	/* P9_11 gpmc_wait0.uart4_rxd_mux2 */
 		>;
 	};
+
+	bb_w1_pins: pinmux_bb_w1_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_BEN1, PIN_INPUT_PULLUP, MUX_MODE7)	/* P9_12: gpio1[28] */
+		>;
+	};
 };
 
 /* Konfiguracja I2C2 */
@@ -427,7 +433,7 @@
 		"[hdmi irq]",
 		"[usb vbus oc]",
 		"[hdmi audio]",
-		"P9_12",
+		"P9_12 [ONEWIRE]",
 		"P8_26 [IN_39]",
 		"P8_21 [emmc]",
 		"P8_20 [emmc]";
@@ -506,6 +512,14 @@
 };
 
 &{/} {
+	onewire {
+		compatible = "w1-gpio";
+		pinctrl-names = "default";
+		pinctrl-0 = <&bb_w1_pins>;
+		gpios = <&gpio1 28 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
+
 	gpio_keys {
 		pinctrl-names = "default";
 		pinctrl-0 = <&bb_gpio_p8_37_pins>, <&bb_gpio_p8_38_pins>, <&bb_gpio_p8_39_pins>,
